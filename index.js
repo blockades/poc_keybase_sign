@@ -83,7 +83,9 @@ ipcMain.on('form-poc', function (event, data) {
         jar: j
       }, function (err, res, body) {
         body = JSON.parse(body);
-        var priv_key = "-----BEGIN PGP PRIVATE KEY BLOCK-----\n\n" + body.keys[0].bundle.match(/.{1,64}/g).join('\n') + "\n-----END PGP PRIVATE KEY BLOCK-----\n";
+        var priv_key = "-----BEGIN PGP PRIVATE KEY BLOCK-----\n\n" +
+          body.keys[0].bundle.match(/.{1,64}/g).join('\n') +
+          "\n-----END PGP PRIVATE KEY BLOCK-----\n";
         console.log(body);
         kbpgp.KeyManager.import_from_armored_pgp({
           armored: priv_key
