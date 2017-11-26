@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Keybase content signing PoC</title>
+  </head>
+  <body>
+    <h1>Keybase content signing PoC</h1>
+    <form name="form-poc" onSubmit="JavaScript:sendForm(event)">
+      <div class="formbloc">
+        <label for="username">Username or email :</label><input type="text" name="username" id="username"> 
+      </div>
+      <div class="formbloc">
+        <label for="password">Password :</label><input type="password" name="password" value="" id="password">
+      </div>
+      <div class="formbloc">
+        <textarea name="content" rows="8" cols="40" id="content"></textarea>
+      </div>
+      <div class="formbloc">
+        <input type="submit" name="submit" value="Sign" id="submit">
+      </div>
+    </form>
+    <script src='renderFile.js'></script>
+  </body>
+</html>
