@@ -694,7 +694,7 @@ performance-now@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
 
-pgp-utils@>=0.0.22, pgp-utils@>=0.0.34:
+pgp-utils@>=0.0.22, pgp-utils@>=0.0.34, pgp-utils@^0.0.34:
   version "0.0.34"
   resolved "https://registry.yarnpkg.com/pgp-utils/-/pgp-utils-0.0.34.tgz#d84f49f7c193b5e0b9415f5cc5c2a695ed790c23"
   dependencies:
@@ -985,7 +985,7 @@ trim-newlines@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/trim-newlines/-/trim-newlines-1.0.0.tgz#5887966bb582a4503a41eb524f7d35011815a613"
 
-triplesec@>=3.0.16, triplesec@>=3.0.19, triplesec@^3.0.25:
+triplesec@>=3.0.16, triplesec@>=3.0.19, triplesec@^3.0.25, triplesec@^3.0.26:
   version "3.0.26"
   resolved "https://registry.yarnpkg.com/triplesec/-/triplesec-3.0.26.tgz#dff2bb4758a423372e739a397d8991f0597d0ac1"
   dependencies:

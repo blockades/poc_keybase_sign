@@ -5,6 +5,9 @@ const url = require('url');
 const login = require('keybase-login').login;
 const request = require('request');
 const kbpgp = require('kbpgp');
+const purepack = require('purepack');
+const {encode} = require('pgp-utils').armor;
+const {encrypt, decrypt} = require('triplesec');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -83,32 +86,36 @@ ipcMain.on('form-poc', function (event, data) {
         jar: j
       }, function (err, res, body) {
         body = JSON.parse(body);
-        var priv_key = "-----BEGIN PGP PRIVATE KEY BLOCK-----\n\n" +
-          body.keys[0].bundle.match(/.{1,64}/g).join('\n') +
-          "\n-----END PGP PRIVATE KEY BLOCK-----\n";
-        console.log(body);
-        kbpgp.KeyManager.import_from_armored_pgp({
-          armored: priv_key
-        }, function(err, user) {
-          if (!err) {
-            if (user.is_pgp_locked()) {
-              user.unlock_pgp({
-                passphrase: password
-              }, function(err) {
-                if (!err) {
-                  console.log("Loaded private key with passphrase");
-                }
-                else {
-                  console.log('error armored', err);
-                }
-              });
-            } else {
-              console.log("Loaded private key w/o passphrase");
+        var priv_key = body.keys[0].bundle;
+        buffer = Buffer.from(priv_key, 'base64');
+        obj = purepack.unpack(buffer);
+        enc_key = obj.body.priv.data;
+        key = decrypt({ key: Buffer.from(password, 'utf8'), data : enc_key }, function(err, key) {
+          console.log(err);
+          key = encode({header: {comment : "none", version : "0" } }, "PRIVATE KEY BLOCK", key);
+          kbpgp.KeyManager.import_from_armored_pgp({
+            armored: key
+          }, function(err, user) {
+            if (!err) {
+              if (user.is_pgp_locked()) {
+                user.unlock_pgp({
+                  passphrase: password
+                }, function(err) {
+                  if (!err) {
+                    console.log("Loaded private key with passphrase");
+                  }
+                  else {
+                    console.log('error armored', err);
+                  }
+                });
+              } else {
+                console.log("Loaded private key w/o passphrase");
+              }
             }
-          }
-          else {
-            console.log('error', err);
-          }
+            else {
+              console.log('error', err);
+            }
+          });
         });
       });
     });
