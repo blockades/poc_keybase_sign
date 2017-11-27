@@ -16,6 +16,6 @@
     "triplesec": "^3.0.26"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "./node_modules/.bin/electron ."
   }
 }
