@@ -82,7 +82,7 @@ ipcMain.on('form-poc', function (event, data) {
 
       request({
         url: 'https://keybase.io/_/api/1.0/key/fetch.json',
-        qs: {kids: key_id, cookies: cookies, ops: 2},
+        qs: {kids: key_id, cookies: cookies, ops: 8},
         jar: j
       }, function (err, res, body) {
         body = JSON.parse(body);
@@ -106,14 +106,23 @@ ipcMain.on('form-poc', function (event, data) {
                   }
                   else {
                     console.log('error armored', err);
+                    return;
                   }
                 });
               } else {
                 console.log("Loaded private key w/o passphrase");
+                kbpgp.box({
+                  msg: content,
+                  sign_with: user
+                }, function (err, result_string, result_buf) {
+                  console.log(err, result_string);
+                  event.sender.send('signed-msg', {s_msg: result_string});
+                });
               }
             }
             else {
               console.log('error', err);
+              return;
             }
           });
         });

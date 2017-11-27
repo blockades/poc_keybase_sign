@@ -13,3 +13,9 @@ function sendForm(event) {
 
   ipcRenderer.send('form-poc', data);
 }
+
+
+ipcRenderer.on('signed-msg', function (event, data) {
+  var s_msg = data.s_msg;
+  document.getElementById("content").value = s_msg;
+});
