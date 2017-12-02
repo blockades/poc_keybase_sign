@@ -77,12 +77,13 @@ ipcMain.on('form-poc', function (event, data) {
       jar: j
     }, function (err, res, body) {
       body = JSON.parse(body);
+      console.log(JSON.stringify(body, null, 4));
       key_id = body.them[0].public_keys.primary.kid;
 
       // Fetch the signing key (ops: 0x08)
       request({
         url: 'https://keybase.io/_/api/1.0/key/fetch.json',
-        qs: {kids: key_id, cookies: cookies, ops: 8},
+        qs: {kids: key_id, cookies: cookies, ops: 10},
         jar: j
       }, function (err, res, body) {
         // The key is sent in P3SKB so we have to Base64 decode it and decrypt it using triplesec
